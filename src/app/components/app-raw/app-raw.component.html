@@ -1,42 +1,40 @@
-<div class="text-left">
-    <form class="mt-5">
-        <ul class="form-group">
-            <li class="d-flex align-items-center my-2">
-                <label for="inputSSID" class="col-4 col-form-label">SSID</label>
-                <div class="col-8">
-                    <input [(ngModel)]="data.SSID" type="text" class="form-control" name="SSID" placeholder="MyNetwork2023" #inputSSID id="inputSSID">
-                </div>
-            </li>
-            <li class="d-flex align-items-center my-2">
-                <label for="inputChannelBonding" class="col-4 col-form-label">ChannelBonding</label>
-                <div class="col-8">
-                    <input [(ngModel)]="data.ChannelBonding" type="text" class="form-control" name="ChannelBonding" placeholder="80" #inputChannelBonding id="inputChannelBonding">
-                </div>
-            </li>
-            <li class="d-flex align-items-center my-2">
-                <label for="inputWPAKey" class="col-4 col-form-label">WPAKey</label>
-                <div class="col-8">
-                    <input [(ngModel)]="data.WPAKey" type="text" class="form-control" name="WPAKey" placeholder="123465" #WPAKey id="WPAKey">
-                </div>
-            </li>
-            <li class="d-flex align-items-center my-2">
-                <label for="inputExtendedChannel" class="col-4 col-form-label">ExtendedChannel</label>
-                <div class="col-8">
-                    <input [(ngModel)]="data.ExtendedChannel" type="text" class="form-control" name="ExtendedChannel" placeholder="true" #inputExtendedChannel id="inputExtendedChannel">
-                </div>
-            </li>
-            <li class="d-flex align-items-center my-2">
-                <label for="inputUseChannelLimit" class="col-4 col-form-label">UseChannelLimit</label>
-                <div class="col-8">
-                    <input [(ngModel)]="data.UseChannelLimit" type="text" class="form-control" name="UseChannelLimit" placeholder="false" #inputUseChannelLimit id="inputUseChannelLimit">
-                </div>
-            </li>
-            <li class="d-flex align-items-center my-2">
-                <label for="inputChannelLimit" class="col-4 col-form-label">ChannelLimit</label>
-                <div class="col-8">
-                    <input [(ngModel)]="data.ChannelLimit" type="text" class="form-control" name="ChannelLimit" placeholder="30 60 116 161" #inputChannelLimit id="inputChannelLimit">
-                </div>
-            </li>
-        </ul>
-    </form>
-</div>
+<form class="mt-5">
+    <ul class="form-group">
+        <li class="d-flex align-items-center my-2">
+            <label for="inputSSID" class="col-4 col-form-label">SSID</label>
+            <div class="col-8">
+                <input [(ngModel)]="data.SSID" type="text" class="form-control" name="SSID" placeholder="MyNetwork2023" #inputSSID id="inputSSID">
+            </div>
+        </li>
+        <li class="d-flex align-items-center my-2">
+            <label for="inputChannelBonding" class="col-4 col-form-label">ChannelBonding</label>
+            <div class="col-8">
+                <input [(ngModel)]="data.ChannelBonding" type="text" class="form-control" name="ChannelBonding" placeholder="80" #inputChannelBonding id="inputChannelBonding">
+            </div>
+        </li>
+        <li class="d-flex align-items-center my-2">
+            <label for="inputWPAKey" class="col-4 col-form-label">WPAKey</label>
+            <div class="col-8">
+                <input [(ngModel)]="data.WPAKey" type="text" class="form-control" name="WPAKey" placeholder="123465" #WPAKey id="WPAKey">
+            </div>
+        </li>
+        <li class="d-flex align-items-center my-2">
+            <label for="inputExtendedChannel" class="col-4 col-form-label">ExtendedChannel</label>
+            <div class="col-8">
+                <input [(ngModel)]="data.ExtendedChannel" type="text" class="form-control" name="ExtendedChannel" placeholder="true" #inputExtendedChannel id="inputExtendedChannel">
+            </div>
+        </li>
+        <li class="d-flex align-items-center my-2">
+            <label for="inputUseChannelLimit" class="col-4 col-form-label">UseChannelLimit</label>
+            <div class="col-8">
+                <input [(ngModel)]="data.UseChannelLimit" type="text" class="form-control" name="UseChannelLimit" placeholder="false" #inputUseChannelLimit id="inputUseChannelLimit">
+            </div>
+        </li>
+        <li class="d-flex align-items-center my-2">
+            <label for="inputChannelLimit" class="col-4 col-form-label">ChannelLimit</label>
+            <div class="col-8">
+                <input [(ngModel)]="data.ChannelLimit" type="text" class="form-control" name="ChannelLimit" placeholder="30 60 116 161" #inputChannelLimit id="inputChannelLimit">
+            </div>
+        </li>
+    </ul>
+</form>

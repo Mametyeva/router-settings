@@ -1,9 +1,28 @@
 .form-group-list {
     overflow-y: scroll;
-    max-height: 300px;
-    list-style-type: none;
+    max-height: 240px;
 }
 
 li {
     list-style-type: none;
 }
+
+form.form-router ul.form-group {
+    padding-left: 0;
+}
+
+.form-router > ul.form-group li label, b, p {
+    text-align: right;
+}
+
+.col-4 {
+    margin-right: 18px;
+}
+
+.form-btn .btn {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    box-shadow: inset 2px 2px 20px rgba(0, 0, 0, 0.1);
+}
+

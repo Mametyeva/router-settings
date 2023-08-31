@@ -45,6 +45,7 @@ export class AppWebComponent {
   }
  
   toggleAllChnls(val: boolean) {
+    this.selectedChnls.splice(0, this.selectedChnls.length);
     const elements = document.getElementsByClassName('channel');
     for (let i = 0; i < elements.length; i++) {
       const el = elements[i] as HTMLInputElement;
@@ -72,14 +73,15 @@ export class AppWebComponent {
       this.newData.ExtendedChannel === true ?
       this.available[0] = [...this.channels.cb80ec] :
       this.available[0] = [...this.channels.cb80]
+    } else {
+      this.available[0] = [[]]
     }
   }
 
-  isValid(name: string): boolean {
+  isValid(name: string){
     if (!this.newData[name as keyof typeof this.newData]) {
       const element = document.getElementById(name);
       element?.classList.add('is-invalid');
-      return false
     } else {
       document.getElementById(name)?.classList.remove('is-invalid');
     }
@@ -99,11 +101,40 @@ export class AppWebComponent {
       document.getElementById(name)?.classList.add('is-invalid') :
       document.getElementById(name)?.classList.remove('is-invalid')
     }
+  }
+
+  checkForm(): boolean {
+    for (const name in this.newData) {
+      const param = this.newData[name as keyof typeof this.newData];
+      if (name === 'SSID' || name === 'ChannelBonding' || name === 'WPAKey') {
+        if (!param) {
+          const element = document.getElementById(name);
+          element?.classList.add('is-invalid');
+          return false
+        } else {
+          document.getElementById(name)?.classList.remove('is-invalid');
+        }
+      }
+    }
     return true
   }
 
-  submitForm(val: boolean) {
-    //this.isValid();
-    console.log(val);
+  resetForm() {
+    const form = document.getElementsByTagName('form');
+    form[0].reset()
+  }
+
+  submitForm() {
+    this.checkForm();
+    if (this.checkForm()) {
+      this.data.SSID = this.newData.SSID
+      this.data.ChannelBonding = this.newData.ChannelBonding;
+      this.data.WPAKey = this.newData.WPAKey;
+      this.data.ExtendedChannel = String(this.newData.ExtendedChannel);
+      this.data.UseChannelLimit = String(this.newData.UseChannelLimit);
+      this.data.ChannelLimit = this.selectedChnls.join(' ');
+      this.resetForm()
+    }
+    return
   }
 }
