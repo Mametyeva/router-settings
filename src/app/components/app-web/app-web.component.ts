@@ -85,16 +85,6 @@ export class AppWebComponent {
     } else {
       document.getElementById(name)?.classList.remove('is-invalid');
     }
-/*     if (!this.newData.SSID) {
-      const inputSSID = document.getElementById('inputSSID');
-      inputSSID?.classList.add('is-invalid');
-      return false
-    }
-    if (!this.newData.ChannelBonding) {
-      const inputChannelBonding = document.getElementById('inputChannelBonding');
-      inputChannelBonding?.classList.add('is-invalid');
-      return false
-    } */
 
     if (name === "WPAKey") {
       (this.newData.WPAKey.length < 8 || this.newData.WPAKey.length > 63) ?
