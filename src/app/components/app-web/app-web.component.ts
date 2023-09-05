@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, AfterViewInit } from '@angular/core'
 import { DataRaw } from 'src/app/models/modelDataRaw'
 import { DataWeb } from 'src/app/models/modelDataWeb'
 import { dataRaw } from 'src/app/data/data-raw'
@@ -8,16 +8,24 @@ import { dataRaw } from 'src/app/data/data-raw'
   templateUrl: './app-web.component.html',
   styleUrls: ['./app-web.component.scss']
 })
-export class AppWebComponent {
+export class AppWebComponent implements AfterViewInit {
+
+  constructor() {
+   this.changeAvailableChnls()
+  }
+
+  ngAfterViewInit(): void {
+    this.selectChnlsRaw()
+  }
 
   data: DataRaw = dataRaw;
   newData: DataWeb = {
     SSID: this.data.SSID,
     ChannelBonding: this.data.ChannelBonding,
     WPAKey: this.data.WPAKey,
-    ExtendedChannel: Boolean(this.data.ExtendedChannel),
-    UseChannelLimit: Boolean(this.data.UseChannelLimit),
-    ChannelLimit: this.data.ChannelLimit,
+    ExtendedChannel: this.data.ExtendedChannel === 'true',
+    UseChannelLimit: this.data.UseChannelLimit === 'true',
+    ChannelLimit: [],
   }
 
   channels = {
@@ -30,8 +38,18 @@ export class AppWebComponent {
     cb80: [36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 149, 153, 157, 161],
   }
 
-  available: object[] = [[]];
   selectedChnls: number[] = []
+
+  selectChnlsRaw() {
+    if (this.data.ChannelLimit) this.data.ChannelLimit.split(' ').forEach(e => {
+      const el = document.getElementById(String(e)) as HTMLInputElement;
+      if (el) {
+        el.checked = true;
+        this.selectedChnls.push(Number(e));
+        this.selectedChnls.sort((a, b) => a - b);
+       } else if (!el) return
+    })
+  }
 
   selectChnls(val: number) {
      const el = document.getElementById(String(val)) as HTMLInputElement;
@@ -51,7 +69,7 @@ export class AppWebComponent {
       const el = elements[i] as HTMLInputElement;
       el.checked = val;
 
-      val === true ?
+      val ?
       this.selectedChnls.push(Number(el.value)) :
       this.selectedChnls.splice(0, this.selectedChnls.length);
     }
@@ -60,53 +78,58 @@ export class AppWebComponent {
   changeAvailableChnls() {
     this.toggleAllChnls(false);
     if (this.newData.ChannelBonding === '5' || this.newData.ChannelBonding === '10') {
-      this.available[0] = [...this.channels.cb5cb10];
+      this.newData.ChannelLimit = [...this.channels.cb5cb10];
     } else if (this.newData.ChannelBonding === '20') {
-      this.newData.ExtendedChannel === true ?
-      this.available[0] = [...this.channels.cb20ec] :
-      this.available[0] = [...this.channels.cb20]
+      this.newData.ExtendedChannel ?
+      this.newData.ChannelLimit = [...this.channels.cb20ec] :
+      this.newData.ChannelLimit = [...this.channels.cb20]
     } else if (this.newData.ChannelBonding === '40') {
-      this.newData.ExtendedChannel === true ?
-      this.available[0] = [...this.channels.cb40ec] :
-      this.available[0] = [...this.channels.cb40]
+      this.newData.ExtendedChannel ?
+      this.newData.ChannelLimit = [...this.channels.cb40ec] :
+      this.newData.ChannelLimit = [...this.channels.cb40]
     } else if (this.newData.ChannelBonding === '80') {
-      this.newData.ExtendedChannel === true ?
-      this.available[0] = [...this.channels.cb80ec] :
-      this.available[0] = [...this.channels.cb80]
+      this.newData.ExtendedChannel ?
+      this.newData.ChannelLimit = [...this.channels.cb80ec] :
+      this.newData.ChannelLimit = [...this.channels.cb80]
     } else {
-      this.available[0] = [[]]
+      this.newData.ChannelLimit = []
     }
   }
 
-  isValid(name: string){
-    if (!this.newData[name as keyof typeof this.newData]) {
-      const element = document.getElementById(name);
+  isInvalid(val: any, element: any) {
+    if (val) {
       element?.classList.add('is-invalid');
     } else {
-      document.getElementById(name)?.classList.remove('is-invalid');
+      element?.classList.remove('is-invalid');
     }
+  }
+
+  isValid(name: string) {
+    const element = document.getElementById(name);
+    const param = this.newData[name as keyof typeof this.newData];
+    console.log(typeof element)
+    this.isInvalid(!param, element);
 
     if (name === "WPAKey") {
-      (this.newData.WPAKey.length < 8 || this.newData.WPAKey.length > 63) ?
-      document.getElementById(name)?.classList.add('is-invalid') :
-      document.getElementById(name)?.classList.remove('is-invalid')
+      this.isInvalid((this.newData.WPAKey.length < 8 || this.newData.WPAKey.length > 63), element)
     }
   }
 
   checkForm(): boolean {
     for (const name in this.newData) {
+      const element = document.getElementById(name);
       const param = this.newData[name as keyof typeof this.newData];
-      if (name === 'SSID' || name === 'ChannelBonding' || name === 'WPAKey') {
-        if (!param) {
-          const element = document.getElementById(name);
-          element?.classList.add('is-invalid');
-          return false
+      if ((name === 'SSID' || name === 'ChannelBonding' || name === 'WPAKey') && !param) {       
+        element?.classList.add('is-invalid');
+        return false 
+      } else if (name === 'WPAKey' && (this.newData.WPAKey.length < 8 || this.newData.WPAKey.length > 63)) {
+        element?.classList.add('is-invalid');
+        return false
         } else {
-          document.getElementById(name)?.classList.remove('is-invalid');
+          element?.classList.remove('is-invalid');
         }
-      }
     }
-    return true
+      return true
   }
 
   resetForm() {

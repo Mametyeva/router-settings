@@ -1,13 +1,13 @@
 <form (submit)="submitForm()" class="form-router my-5">
     <ul class="form-group">
         <li class="d-flex align-items-center my-2">
-            <label for="inputSSID" class="col-4 col-form-label">SSID*</label>
+            <label for="SSID" class="col-4 col-form-label">SSID*</label>
             <div class="col">
                 <input [(ngModel)]="newData.SSID" (input)="isValid('SSID')" name="SSID" type="text" class="form-control" placeholder="MyNetwork2023" #SSID id="SSID">
             </div>
         </li>
         <li class="d-flex align-items-center my-2">
-            <label for="inputChannelBonding" class="col-4 col-form-label">Channel Bonding*</label>
+            <label for="ChannelBonding" class="col-4 col-form-label">Channel Bonding*</label>
             <div class="col">
                 <select [(ngModel)]="newData.ChannelBonding" (change)="changeAvailableChnls()" name="ChannelBonding" class="form-select" #ChannelBonding id="ChannelBonding">
                     <option value="5">5 МГц</option>
@@ -19,7 +19,7 @@
             </div>
         </li>
         <li class="d-flex align-items-center my-2">
-            <label for="inputWPAKey" class="col-4 col-form-label">WPA Key*</label>
+            <label for="WPAKey" class="col-4 col-form-label">WPA Key*</label>
             <div class="col">
                 <input [(ngModel)]="newData.WPAKey" (input)="isValid('WPAKey')" name="WPAKey" type="text" class="form-control" placeholder="123465" #WPAKey id="WPAKey">
             </div>
@@ -27,7 +27,7 @@
         <li *ngIf="!(newData.ChannelBonding === '5' || newData.ChannelBonding === '10')" class="d-flex align-items-baseline">
             <p class="col-4">Extended Channel</p>
             <div class="form-check form-switch col">
-                <label class="form-check-label" for="inputExtendedChannel">
+                <label class="form-check-label" for="ExtendedChannel">
                     <input [(ngModel)]="newData.ExtendedChannel" (change)="changeAvailableChnls()" name="ExtendedChannel" class="form-check-input" type="checkbox" #ExtendedChannel id="ExtendedChannel">
                 </label>
             </div>
@@ -35,7 +35,7 @@
         <li class="d-flex align-items-baseline">
             <p class="col-4">Use Channel Limit</p>
             <div class="form-check form-switch col">
-                <label class="form-check-label" for="inputUseChannelLimit">
+                <label class="form-check-label" for="UseChannelLimit">
                     <input [(ngModel)]="newData.UseChannelLimit" (change)="changeAvailableChnls()" name="UseChannelLimit" class="form-check-input" type="checkbox" #UseChannelLimit id="UseChannelLimit">
                 </label>
             </div>
@@ -58,7 +58,7 @@
             <div class="chnls-available d-flex align-items-start">
                 <label for="inputChannelLimit" class="col-4 col-form-label">Channel Limit</label>
                 <ul class="col form-check form-group-list" #inputChannelLimit id="inputChannelLimit">
-                    <li *ngFor="let chnl of available[0]">
+                    <li *ngFor="let chnl of newData.ChannelLimit">
                       <input (change)="selectChnls(chnl)" class="form-check-input channel mr-1" type="checkbox" [value]="chnl" [id]="chnl">
                       {{ chnl }}
                     </li>

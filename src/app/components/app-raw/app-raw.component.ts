@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 import { DataRaw } from 'src/app/models/modelDataRaw'
 import { dataRaw } from 'src/app/data/data-raw'
 

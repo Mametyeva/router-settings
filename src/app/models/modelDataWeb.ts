@@ -4,5 +4,5 @@ export interface DataWeb {
     WPAKey: string;
     ExtendedChannel: boolean;
     UseChannelLimit: boolean;
-    ChannelLimit: string;
+    ChannelLimit: object;
 }
